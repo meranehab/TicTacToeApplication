@@ -21,6 +21,7 @@ public class TicTacToeBoard extends View {
     private final Paint paint=new Paint();
     private int cellSize=getWidth()/3;
     private final GameLogic game;
+    private boolean winningLine = false;
 
     public TicTacToeBoard(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -67,16 +68,24 @@ public class TicTacToeBoard extends View {
         if(action==MotionEvent.ACTION_DOWN){
             int row =(int) Math.ceil(y/cellSize);
             int col =(int) Math.ceil(x/cellSize);
-            if(game.updateGameBoard(row,col)){
-                invalidate();
-                //updating the players turn
-                if(game.getPlayer()%2==0){
-                    game.setPlayer(game.getPlayer()-1);
+            if(!winningLine){
+                if(game.updateGameBoard(row,col)){
+                    invalidate();
+                    if(game.winnerCheck()){
+                        winningLine = true;
+                        invalidate();
+                    }
+                    //updating the players turn
+                    if(game.getPlayer()%2==0){
+                        game.setPlayer(game.getPlayer()-1);
+                    }
+                    else {
+                        game.setPlayer(game.getPlayer()+1);
+                    }
                 }
-                else {
-                    game.setPlayer(game.getPlayer()+1);
-                }
+
             }
+
             invalidate();
             return true;
 
@@ -146,5 +155,6 @@ public class TicTacToeBoard extends View {
     }
     public void resetGame(){
         game.resetGame();
+        winningLine = false;
     }
 }

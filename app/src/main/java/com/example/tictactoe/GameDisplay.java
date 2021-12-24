@@ -20,6 +20,9 @@ public class GameDisplay extends AppCompatActivity {
         Button homeBTN = findViewById(R.id.home_button);
         TextView playerTurn = findViewById(R.id.player_display);
 
+        playAgainBTN.setVisibility(View.GONE);
+        homeBTN.setVisibility(View.GONE);
+
         String[] playerNames = getIntent().getStringArrayExtra("PLAYER_NAMES");
 
         if (playerNames != null){
