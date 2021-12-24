@@ -9,6 +9,9 @@ public class GameLogic {
 
     private  String[] playerNames = {"Player 1", "Player 2"};
 
+    //1st element --> row, 2nd element--> col, 3rd element --> line type
+    private int[] winType = {-1 ,-1, -1};
+
     private Button playAgainBTN;
     private  Button homeBTN;
     private TextView playerTurn;
@@ -43,23 +46,28 @@ public class GameLogic {
         for(int r=0; r<3;r++){
             if(gameBoard[r][0] == gameBoard[r][1] && gameBoard[r][0] == gameBoard[r][2] && gameBoard[r][0] != 0) //row check
             {
+                winType =new int[] {r, 0, 1};
                 isWinner = true;
             }
         }
             for(int c=0; c<3;c++) {
-                if (gameBoard[0][c] == gameBoard[1][c] && gameBoard[0][c] == gameBoard[2][c] && gameBoard[0][c] != 0) { //colum check
+                if (gameBoard[0][c] == gameBoard[1][c] && gameBoard[0][c] == gameBoard[2][c] && gameBoard[0][c] != 0) { //column check
+
+                    winType =new int[] {0, c, 2};
                     isWinner = true;
                 }
             }
-        if (gameBoard[0][0] == gameBoard[1][1] && gameBoard[0][0] == gameBoard[2][2] && gameBoard[0][0] != 0) { // diagnol check
+        if (gameBoard[0][0] == gameBoard[1][1] && gameBoard[0][0] == gameBoard[2][2] && gameBoard[0][0] != 0) { // diagonal check
+            winType =new int[] {0, 2, 3};
             isWinner = true;
         }
         if (gameBoard[2][0] == gameBoard[1][1] && gameBoard[2][0] == gameBoard[0][2] && gameBoard[2][0] != 0) { // diagonal check
+            winType =new int[] {2, 2, 4};
             isWinner = true;
         }
         int boardFilled = 0;
 
-        for (int r = 0; r < 3; r++){
+        for (int r = 0; r < 3; r++){//tie logic
             for (int c = 0; c<3; c++)
             {
                 if(gameBoard[r][c] != 0){
@@ -75,7 +83,7 @@ public class GameLogic {
             playerTurn.setText((playerNames[player-1] + " Won!!!!!!"));
             return true;
         }
-        else if(boardFilled == 9){
+        else if(boardFilled == 9){// if tie
             playAgainBTN.setVisibility(View.VISIBLE);
             homeBTN.setVisibility(View.VISIBLE);
             playerTurn.setText((" Tie Game"));
@@ -92,6 +100,7 @@ public class GameLogic {
                 gameBoard[r][c]=0;
             }
         }
+        winType = new int[]{-1, -1, -1};
         player = 1;
         playAgainBTN.setVisibility(View.GONE);
         homeBTN.setVisibility(View.GONE);
@@ -125,5 +134,9 @@ public class GameLogic {
 
     public int getPlayer() {
         return player;
+    }
+
+    public int[] getWinType() {
+        return winType;
     }
 }
