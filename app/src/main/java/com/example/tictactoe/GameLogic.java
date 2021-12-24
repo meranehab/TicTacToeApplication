@@ -51,7 +51,7 @@ public class GameLogic {
             }
         }
             for(int c=0; c<3;c++) {
-                if (gameBoard[0][c] == gameBoard[1][c] && gameBoard[0][c] == gameBoard[2][c] && gameBoard[0][c] != 0) { //column check
+                if (gameBoard[0][c] == gameBoard[1][c] && gameBoard[2][c] == gameBoard[0][c] && gameBoard[0][c] != 0) { //column check
 
                     winType =new int[] {0, c, 2};
                     isWinner = true;

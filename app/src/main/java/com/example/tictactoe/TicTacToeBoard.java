@@ -118,7 +118,7 @@ public class TicTacToeBoard extends View {
          for (int r=0;r<3;r++){
              for (int c=0;c<3;c++){
                  if(game.getGameBoard()[r][c]!=0){
-                     if(game.getGameBoard()[r][c]!=1){
+                     if(game.getGameBoard()[r][c]==1){
                        drawX(canvas,r,c);
                      }
                      else{
